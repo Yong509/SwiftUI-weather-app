@@ -1,16 +1,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var isNight = false
+    
     var body: some View {
         ZStack {
-            LinearGradient(gradient:Gradient(colors:[Color.blue,Color("lightBlue")]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing
-            )
-            .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            BackgroundView(isNight: $isNight)
             VStack{
                 
-                MainWeatherStatusView(imageName: "cloud.sun.fill", temperature: 30)
+                MainWeatherStatusView(imageName: isNight
+                                      ? "moon.stars.fill"
+                                      : "cloud.sun.fill",
+                                      temperature: 30)
                 HStack(spacing: 20){
                     WeatherDayView(dayOfWeek: "TUE",
                                    imageName: "cloud.sun.fill",
@@ -32,13 +34,13 @@ struct ContentView: View {
                 Spacer()
                 
                 Button{
-                    print("tapped")
+                    isNight.toggle()
                 }label: {
-                    Text("Change Day Time")
-                        .frame(width: 280, height: 50)
-                        .background(Color.white)
-                        .font(.system(size: 20,weight: .bold))
-                        .cornerRadius(10)
+                    WeatherButton(title: "Change Day Time",
+                                  textColor: .blue,
+                                  backgroundColor: .white
+                    )
+                       
                 }
                 Spacer()
             }
@@ -103,4 +105,24 @@ struct MainWeatherStatusView: View{
         }
     }
 }
+
+struct BackgroundView: View{
+    @Binding var isNight: Bool
+    var body: some View{
+        LinearGradient(gradient:
+                        Gradient(
+                            colors:[
+                                isNight
+                                ? .black
+                                : .blue,
+                                isNight
+                                ? .gray
+                                :  Color("lightBlue")]),
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing
+        )
+        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+    }
+}
+
 
