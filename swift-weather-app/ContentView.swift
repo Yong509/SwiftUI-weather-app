@@ -6,7 +6,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            BackgroundView(isNight: $isNight)
+            BackgroundView(isNight: isNight)
             VStack{
                 
                 MainWeatherStatusView(imageName: isNight
@@ -99,7 +99,9 @@ struct MainWeatherStatusView: View{
 }
 
 struct BackgroundView: View{
-    @Binding var isNight: Bool
+    
+    var isNight: Bool
+    
     var body: some View{
         LinearGradient(gradient:
                         Gradient(
@@ -113,7 +115,7 @@ struct BackgroundView: View{
                        startPoint: .topLeading,
                        endPoint: .bottomTrailing
         )
-        .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+        .ignoresSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
     }
 }
 
