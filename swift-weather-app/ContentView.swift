@@ -13,23 +13,15 @@ struct ContentView: View {
                                       ? "moon.stars.fill"
                                       : "cloud.sun.fill",
                                       temperature: 30)
-                HStack(spacing: 20){
-                    WeatherDayView(dayOfWeek: "TUE",
-                                   imageName: "cloud.sun.fill",
-                                   temperature: 32)
-                    WeatherDayView(dayOfWeek: "WED",
-                                   imageName: "sun.max.fill",
-                                   temperature: 35)
-                    WeatherDayView(dayOfWeek: "THU",
-                                   imageName: "wind",
-                                   temperature: 33)
-                    WeatherDayView(dayOfWeek: "FRI",
-                                   imageName: "sunset.fill",
-                                   temperature: 35)
-                    WeatherDayView(dayOfWeek: "SAT",
-                                   imageName: "cloud.drizzle.fill",
-                                   temperature: 32)
-                    
+            HStack(spacing: 20){
+                ForEach(WeatherDayModel.mockWeatherDayData, 
+                        id: \.self.ID){
+                        weather in WeatherDayView(
+                            dayOfWeek: weather.dayOfWeek,
+                            imageName: weather.imageName,
+                            temperature: weather.temperature
+                        )
+                    }
                 }
                 Spacer()
                 
